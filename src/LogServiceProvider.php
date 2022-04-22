@@ -33,8 +33,9 @@ class LogServiceProvider implements ServiceProvider
                 $level = Logger::toMonologLevel($log['level']);
 
                 $logger->pushHandler(new StreamHandler($storage->suffix('log') . '/' . $log['name'], $level));
+
                 return $logger;
-            }
+            },
         ];
     }
 

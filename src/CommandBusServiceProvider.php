@@ -29,8 +29,9 @@ class CommandBusServiceProvider implements ServiceProvider
                 );
 
                 $lockingMiddleware = new LockingMiddleware();
+
                 return new CommandBus([$lockingMiddleware, $handlerMiddleware]);
-            }
+            },
         ];
     }
 

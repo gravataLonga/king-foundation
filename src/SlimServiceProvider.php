@@ -29,7 +29,7 @@ class SlimServiceProvider implements ServiceProvider
                     $container->get(CallableResolverInterface::class),
                     $container
                 );
-            }
+            },
         ];
     }
 

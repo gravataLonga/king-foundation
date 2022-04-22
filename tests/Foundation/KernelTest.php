@@ -2,7 +2,6 @@
 
 namespace Tests\Foundation;
 
-use Gravatalonga\Container\Container;
 use Gravatalonga\KingFoundation\Kernel;
 use Gravatalonga\KingFoundation\SlimServiceProvider;
 use PHPUnit\Framework\TestCase;
@@ -24,17 +23,18 @@ class KernelTest extends TestCase
     public function setUp(): void
     {
         $this->http = new Kernel(null, [
-            new SlimServiceProvider()
+            new SlimServiceProvider(),
         ]);
     }
 
     /**
      * @test
      */
-    public function can_handle_request ()
+    public function can_handle_request()
     {
         $this->http->get('/', function (Request $rq, Response $rs) {
             $rs->getBody()->write('hello world');
+
             return $rs;
         });
 
@@ -50,10 +50,11 @@ class KernelTest extends TestCase
      * @test
      * @dataProvider dataProviderCanHandleEveryMethod
      */
-    public function can_handle_every_method (string $method, string $uri)
+    public function can_handle_every_method(string $method, string $uri)
     {
         $this->http->{$method}($uri, function (Request $rq, Response $rs) {
             $rs->getBody()->write($rq->getMethod().'-'.$rq->getUri()->getPath());
+
             return $rs;
         });
 
@@ -69,10 +70,11 @@ class KernelTest extends TestCase
      * @test
      * @dataProvider dataProviderHandleAnyMethod
      */
-    public function handle_any_method (string $method)
+    public function handle_any_method(string $method)
     {
         $this->http->any('/any-method', function (Request $rq, Response $rs) {
             $rs->getBody()->write($rq->getMethod().'-'.$rq->getUri()->getPath());
+
             return $rs;
         });
 
@@ -87,10 +89,11 @@ class KernelTest extends TestCase
     /**
      * @test
      */
-    public function can_handle_map_method ()
+    public function can_handle_map_method()
     {
         $this->http->map(['GET', 'POST'], '/get-or-post', function (Request $rq, Response $rs) {
             $rs->getBody()->write($rq->getMethod().'-'.$rq->getUri()->getPath());
+
             return $rs;
         });
 
@@ -112,11 +115,12 @@ class KernelTest extends TestCase
     /**
      * @test
      */
-    public function it_can_handle_group ()
+    public function it_can_handle_group()
     {
         $this->http->group('/my-group', function (RouteCollectorProxy $group) {
             $group->get('/hello', function (Request $rq, Response $rs) {
                 $rs->getBody()->write("world!");
+
                 return $rs;
             });
         });
@@ -131,14 +135,16 @@ class KernelTest extends TestCase
     /**
      * @test
      */
-    public function can_add_middleware_on_method ()
+    public function can_add_middleware_on_method()
     {
         $this->http->get('/hello', function (Request $rq, Response $rs) {
             $rs->getBody()->write("world!");
+
             return $rs;
         })->add(function (Request $request, RequestHandlerInterface $handler) {
             $response = $handler->handle($request);
             $response->getBody()->write('AFTER');
+
             return $response;
         });
 
@@ -152,16 +158,18 @@ class KernelTest extends TestCase
     /**
      * @test
      */
-    public function can_add_middleware ()
+    public function can_add_middleware()
     {
         $this->http->add(function (Request $request, RequestHandlerInterface $handler) {
             $response = $handler->handle($request);
             $response->getBody()->write('AFTER');
+
             return $response;
         });
 
         $this->http->get('/hello', function (Request $rq, Response $rs) {
             $rs->getBody()->write("world!");
+
             return $rs;
         });
 
@@ -180,7 +188,7 @@ class KernelTest extends TestCase
             ['put'],
             ['patch'],
             ['delete'],
-            ['options']
+            ['options'],
         ];
     }
 
@@ -192,7 +200,7 @@ class KernelTest extends TestCase
             'put' => ['put', '/put'],
             'patch' => ['patch', '/patch'],
             'delete' => ['delete', '/delete'],
-            'options' => ['options', '/options']
+            'options' => ['options', '/options'],
         ];
     }
 
@@ -201,7 +209,7 @@ class KernelTest extends TestCase
         $handle = fopen('php://temp', 'w+');
         $stream = (new StreamFactory())->createStreamFromResource($handle);
 
-        if (!empty($payload)) {
+        if (! empty($payload)) {
             $stream->write($payload);
         }
 

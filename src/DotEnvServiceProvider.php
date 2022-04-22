@@ -16,8 +16,9 @@ class DotEnvServiceProvider implements ServiceProvider
             'env' => function (ContainerInterface $container) {
                 $dotenv = Dotenv::createImmutable($container->has('path.base') ? (string)$container->get('path.base') : __DIR__);
                 $dotenv->safeLoad();
+
                 return $dotenv;
-            }
+            },
         ];
     }
 
