@@ -17,6 +17,7 @@ class DatabaseServiceProvider implements ServiceProvider
         return [
             'database.connections' => function (ContainerInterface $container) {
                 $config = $container->has('config.databases') ? $container->get('config.databases') : [];
+
                 return new Manager($config);
             },
             Connection::class => function (ContainerInterface $container) {
