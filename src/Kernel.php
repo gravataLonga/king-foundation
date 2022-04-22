@@ -28,7 +28,7 @@ final class Kernel
 
     private SlimApp $slimApp;
 
-    public function __construct(?Path $path = null, array $providers)
+    public function __construct(?Path $path = null, array $providers = [])
     {
         $this->app = new App($path);
         foreach ($providers as $provider) {
