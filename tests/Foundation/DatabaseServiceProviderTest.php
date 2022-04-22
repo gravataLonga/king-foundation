@@ -14,7 +14,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function get_entries ()
+    public function get_entries()
     {
         $provider = new DatabaseServiceProvider();
         $entries = $provider->factories();

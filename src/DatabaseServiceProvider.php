@@ -20,10 +20,11 @@ class DatabaseServiceProvider implements ServiceProvider
             },
             Connection::class => function (ContainerInterface $container) {
                 $driver = $container->get('databases.connections');
+
                 return DriverManager::getConnection(
                     $driver->driver($_ENV['DATABASE_CONNECTION'] ?? 'master')
                 );
-            }
+            },
         ];
     }
 

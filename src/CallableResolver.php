@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
+use function class_exists;
 use Closure;
+use function is_array;
+use function is_callable;
+use function is_object;
+
+use function is_string;
+use function json_encode;
+use function preg_match;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use RuntimeException;
-
 use Slim\Interfaces\CallableResolverInterface;
-use function class_exists;
-use function is_array;
-use function is_callable;
-use function is_object;
-use function is_string;
-use function json_encode;
-use function preg_match;
 use function sprintf;
 
 final class CallableResolver implements CallableResolverInterface
@@ -55,6 +55,7 @@ final class CallableResolver implements CallableResolverInterface
             $resolved[1] = $resolved[1] ?? '__invoke';
         }
         $callable = $this->assertCallable($resolved, $toResolve);
+
         return $this->bindToContainer($callable);
     }
 
@@ -74,31 +75,36 @@ final class CallableResolver implements CallableResolverInterface
         /** @var string|null $method */
         if ($this->container && $this->container->has($class)) {
             $instance = $this->container->get($class);
-            if (!is_object($instance)) {
+            if (! is_object($instance)) {
                 throw new RuntimeException(sprintf('%s container entry is not an object', $class));
             }
-        } elseif (!$this->container) {
-            if (!class_exists($class)) {
+        } elseif (! $this->container) {
+            if (! class_exists($class)) {
                 if ($method) {
                     $class .= '::' . $method . '()';
                 }
+
                 throw new RuntimeException(sprintf('Callable %s does not exist', $class));
             }
             $instance = new $class($this->container);
+
             return [$instance, $method];
         } else {
-            if (!class_exists($class)) {
+            if (! class_exists($class)) {
                 if ($method) {
                     $class .= '::' . $method . '()';
                 }
+
                 throw new RuntimeException(sprintf('Callable %s does not exist', $class));
             }
+
             try {
                 $instance = $this->container->get($class);
             } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
                 throw new RuntimeException(sprintf('Class can\'t be resolve by container - autowiring %s', $class));
             }
         }
+
         return [$instance, $method];
     }
 
@@ -112,14 +118,16 @@ final class CallableResolver implements CallableResolverInterface
      */
     private function assertCallable($resolved, $toResolve): callable
     {
-        if (!is_callable($resolved)) {
+        if (! is_callable($resolved)) {
             if (is_callable($toResolve) || is_object($toResolve) || is_array($toResolve)) {
                 $formatedToResolve = ($toResolveJson = json_encode($toResolve)) !== false ? $toResolveJson : '';
             } else {
                 $formatedToResolve = is_string($toResolve) ? $toResolve : '';
             }
+
             throw new RuntimeException(sprintf('%s is not resolvable', $formatedToResolve));
         }
+
         return $resolved;
     }
 
@@ -137,6 +145,7 @@ final class CallableResolver implements CallableResolverInterface
             /** @var Closure $callable */
             $callable = $callable->bindTo($this->container);
         }
+
         return $callable;
     }
 
@@ -146,7 +155,7 @@ final class CallableResolver implements CallableResolverInterface
      */
     private function prepareToResolve($toResolve)
     {
-        if (!is_array($toResolve)) {
+        if (! is_array($toResolve)) {
             return $toResolve;
         }
         $candidate = $toResolve;
@@ -155,6 +164,7 @@ final class CallableResolver implements CallableResolverInterface
         if (is_string($class) && is_string($method)) {
             return $class . '@' . $method;
         }
+
         return $toResolve;
     }
 }

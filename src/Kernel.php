@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
-use Gravatalonga\Framework\ValueObject\Path;
 use Gravatalonga\Framework\App;
+use Gravatalonga\Framework\ValueObject\Path;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -89,6 +89,7 @@ final class Kernel
     public function add($middleware): self
     {
         $this->slimApp->add($middleware);
+
         return $this;
     }
 

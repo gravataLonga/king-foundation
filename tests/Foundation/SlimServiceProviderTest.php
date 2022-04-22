@@ -16,7 +16,7 @@ class SlimServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function get_entries_from_service_provider ()
+    public function get_entries_from_service_provider()
     {
         $service = new SlimServiceProvider();
         $entries = $service->factories();

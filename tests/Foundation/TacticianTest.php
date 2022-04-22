@@ -14,7 +14,7 @@ class TacticianTest extends TestCase
     /**
      * @test
      */
-    public function provider_built_tactician ()
+    public function provider_built_tactician()
     {
         $provider = new CommandBusServiceProvider();
         $entries = $provider->factories();
