@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gravatalonga\Web\Foundation;
+namespace Gravatalonga\KingFoundation;
 
 use Gravatalonga\Framework\ServiceProvider;
 use Gravatalonga\Framework\ValueObject\Path;
