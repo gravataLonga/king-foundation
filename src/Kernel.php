@@ -117,6 +117,7 @@ final class Kernel
             return AppFactory::createFromContainer($container);
         }
         $this->routeCollector = $container->get(RouteCollectorInterface::class);
+
         return AppFactory::createFromContainer($container);
     }
 }
