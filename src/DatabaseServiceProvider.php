@@ -16,10 +16,11 @@ class DatabaseServiceProvider implements ServiceProvider
     {
         return [
             'database.connections' => function (ContainerInterface $container) {
-                return new Manager($container->get('config.databases'));
+                $config = $container->has('config.databases') ? $container->get('config.databases') : [];
+                return new Manager($config);
             },
             Connection::class => function (ContainerInterface $container) {
-                $driver = $container->get('databases.connections');
+                $driver = $container->get('database.connections');
 
                 return DriverManager::getConnection(
                     $driver->driver($_ENV['DATABASE_CONNECTION'] ?? 'master')

@@ -30,13 +30,7 @@ final class Kernel
 
     public function __construct(?Path $path = null, array $providers = [])
     {
-        $this->app = new App($path);
-        foreach ($providers as $provider) {
-            $this->app->register($provider);
-        }
-
-        $this->app->register(new DotEnvServiceProvider());
-        $this->app->boot();
+        $this->bootApplication($path, $providers);
 
         $this->slimApp = $this->createSlimApplication();
     }
@@ -103,14 +97,26 @@ final class Kernel
         $this->slimApp->run($request);
     }
 
+    private function bootApplication(?Path $path = null, array $providers = [])
+    {
+        $this->app = new App($path);
+
+        foreach ($providers as $provider) {
+            $this->app->register($provider);
+        }
+
+        $this->app->register(new DotEnvServiceProvider());
+        $this->app->boot();
+        $this->app->getContainer()->get('env');
+    }
+
     private function createSlimApplication(): SlimApp
     {
         $container = $this->app->getContainer();
-        // load specif service provider
-        $this->app->getContainer()->get('env');
-
+        if (! $container->has(RouteCollectorInterface::class)) {
+            return AppFactory::createFromContainer($container);
+        }
         $this->routeCollector = $container->get(RouteCollectorInterface::class);
-
         return AppFactory::createFromContainer($container);
     }
 }
