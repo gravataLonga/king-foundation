@@ -28,7 +28,7 @@ namespace Gravatalonga\KingFoundation {
 
                 case 'null':
                 case '(null)':
-                    return;
+                    return null;
             }
 
             if (strlen($value) > 1 && starts_with($value, '"') && ends_with($value, '"')) {
