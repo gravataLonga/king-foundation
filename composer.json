@@ -38,7 +38,8 @@
     "autoload": {
         "psr-4": {
             "Gravatalonga\\KingFoundation\\": "src"
-        }
+        },
+        "files": ["./src/helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {
