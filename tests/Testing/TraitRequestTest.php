@@ -17,7 +17,7 @@ class TraitRequestTest extends TestCase
     /**
      * @test
      */
-    public function can_create_request ()
+    public function can_create_request()
     {
         $trait = $this->getTraitRequest();
 

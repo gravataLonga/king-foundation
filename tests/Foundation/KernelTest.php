@@ -7,11 +7,8 @@ use Gravatalonga\KingFoundation\SlimServiceProvider;
 use Gravatalonga\KingFoundation\Testing\TraitRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Headers;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use Slim\Psr7\Uri;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
