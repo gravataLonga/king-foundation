@@ -4,6 +4,7 @@ namespace Tests\Foundation;
 
 use Gravatalonga\KingFoundation\Kernel;
 use Gravatalonga\KingFoundation\SlimServiceProvider;
+use Gravatalonga\KingFoundation\Testing\TraitRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Factory\StreamFactory;
@@ -18,6 +19,8 @@ use Slim\Routing\RouteCollectorProxy;
  */
 class KernelTest extends TestCase
 {
+    use TraitRequest;
+
     public Kernel $http;
 
     public function setUp(): void
@@ -202,23 +205,5 @@ class KernelTest extends TestCase
             'delete' => ['delete', '/delete'],
             'options' => ['options', '/options'],
         ];
-    }
-
-    public function createRequest(string $method, string $uri, ?string $payload = null, array $headers = []): Request
-    {
-        $handle = fopen('php://temp', 'w+');
-        $stream = (new StreamFactory())->createStreamFromResource($handle);
-
-        if (! empty($payload)) {
-            $stream->write($payload);
-        }
-
-        $uri = new Uri('', '', 80, $uri);
-        $h = new Headers();
-        foreach ($headers as $key => $value) {
-            $h->addHeader($key, $value);
-        }
-
-        return new Request($method, $uri, $h, [], [], $stream);
     }
 }
