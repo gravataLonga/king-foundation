@@ -179,6 +179,36 @@ class KernelTest extends TestCase
         $this->assertNotEmpty($body);
         $this->assertEquals('world!AFTER', (string)$body);
     }
+    
+    /**
+     * @test
+     * @dataProvider dataProviderAddParseBodyMiddleware
+     */
+    public function add_parse_body_middleware (string $contentType, string $payload, string $expected)
+    {
+        $this->http->post('/', function (Request $request, Response $response) {
+            $response->getBody()->write(gettype($request->getParsedBody()));
+            return $response;
+        });
+
+        $response = $this->http->handle($this->createRequest('POST', '/', $payload, [
+            'Content-Type' => $contentType
+        ]));
+
+        $body = (string)$response->getBody();
+
+        $this->assertEquals($expected, $body);
+    }
+
+    public function dataProviderAddParseBodyMiddleware()
+    {
+        return [
+            ['application/json', '{"type":"hello"}', 'array'],
+            ['application/x-www-form-urlencoded', 'type=hello', 'array'],
+            ['application/xml', '<type>hello</type>', 'object'],
+            ['text/xml', '<type>hello</type>', 'object']
+        ];
+    }
 
     public function dataProviderHandleAnyMethod()
     {
