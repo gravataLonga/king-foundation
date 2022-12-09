@@ -120,6 +120,7 @@ final class Kernel
 
         $app = AppFactory::createFromContainer($container);
         $app->addBodyParsingMiddleware();
+
         return $app;
     }
 }

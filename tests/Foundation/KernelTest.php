@@ -184,15 +184,16 @@ class KernelTest extends TestCase
      * @test
      * @dataProvider dataProviderAddParseBodyMiddleware
      */
-    public function add_parse_body_middleware (string $contentType, string $payload, string $expected)
+    public function add_parse_body_middleware(string $contentType, string $payload, string $expected)
     {
         $this->http->post('/', function (Request $request, Response $response) {
             $response->getBody()->write(gettype($request->getParsedBody()));
+
             return $response;
         });
 
         $response = $this->http->handle($this->createRequest('POST', '/', $payload, [
-            'Content-Type' => $contentType
+            'Content-Type' => $contentType,
         ]));
 
         $body = (string)$response->getBody();
@@ -206,7 +207,7 @@ class KernelTest extends TestCase
             ['application/json', '{"type":"hello"}', 'array'],
             ['application/x-www-form-urlencoded', 'type=hello', 'array'],
             ['application/xml', '<type>hello</type>', 'object'],
-            ['text/xml', '<type>hello</type>', 'object']
+            ['text/xml', '<type>hello</type>', 'object'],
         ];
     }
 
