@@ -13,11 +13,10 @@ class ConsoleServiceProvider implements ServiceProvider
     public function factories(): array
     {
         return [
-            CommandLoaderInterface::class => function(ContainerInterface $container) {
+            CommandLoaderInterface::class => function (ContainerInterface $container) {
                 return new ContainerCommandLoader($container, $container->has('config.console') ? $container->get('config.console') : []);
             },
-            Application::class => function(ContainerInterface $container) {
-
+            Application::class => function (ContainerInterface $container) {
                 $config = $container->has('config.app') ? $container->get('config.app') : [];
                 $name = $config['name'] ?? 'UNKNOWN';
                 $version = $config['version'] ?? 'UNKNOWN';
@@ -26,8 +25,9 @@ class ConsoleServiceProvider implements ServiceProvider
                 if ($container->has(CommandLoaderInterface::class)) {
                     $app->setCommandLoader($container->get(CommandLoaderInterface::class));
                 }
+
                 return $app;
-            }
+            },
         ];
     }
 

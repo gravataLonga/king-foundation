@@ -2,6 +2,8 @@
 
 namespace Tests\Foundation;
 
+use function Gravatalonga\Framework\container;
+use function Gravatalonga\Framework\instance;
 use Gravatalonga\Framework\ServiceProvider;
 use Gravatalonga\KingFoundation\ConsoleServiceProvider;
 use Gravatalonga\KingFoundation\Kernel;
@@ -12,9 +14,6 @@ use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\ApplicationTester;
-use Symfony\Component\Console\Tester\CommandTester;
-use function Gravatalonga\Framework\container;
-use function Gravatalonga\Framework\instance;
 
 class ConsoleServiceProviderTest extends TestCase
 {
@@ -36,7 +35,7 @@ class ConsoleServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_a_console_application ()
+    public function can_create_a_console_application()
     {
         new Kernel(null, [
             new ConsoleServiceProvider(),
@@ -44,7 +43,7 @@ class ConsoleServiceProviderTest extends TestCase
 
         container()->set('config.app', [
             'name' => 'App',
-            'version' => '1.0.0'
+            'version' => '1.0.0',
         ]);
 
         /** @var Application $application */
@@ -57,7 +56,7 @@ class ConsoleServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function exists_config_but_set_keys_for_name_and_version ()
+    public function exists_config_but_set_keys_for_name_and_version()
     {
         new Kernel(null, [
             new ConsoleServiceProvider(),
@@ -75,7 +74,7 @@ class ConsoleServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_register_commands ()
+    public function can_register_commands()
     {
         new Kernel(null, [
             new ConsoleServiceProvider(),
@@ -91,11 +90,12 @@ class ConsoleServiceProviderTest extends TestCase
             public function execute(InputInterface $input, OutputInterface $output)
             {
                 $output->write('SUCCESS');
+
                 return Command::SUCCESS;
             }
         });
         container()->set('config.console', [
-            'app:debug' => 'command_app_debug'
+            'app:debug' => 'command_app_debug',
         ]);
 
         /** @var Application $application */

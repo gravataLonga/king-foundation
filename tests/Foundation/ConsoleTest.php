@@ -10,14 +10,14 @@ class ConsoleTest extends TestCase
     public function setUp(): void
     {
         $this->console = new Kernel(null, [
-            new ConsoleServiceProvider()
+            new ConsoleServiceProvider(),
         ]);
     }
 
     /**
      * @test
      */
-    public function can_create_console_application ()
+    public function can_create_console_application()
     {
     }
 }
