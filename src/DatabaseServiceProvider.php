@@ -32,18 +32,20 @@ class DatabaseServiceProvider implements ServiceProvider
                     $driver->driver($_ENV['DATABASE_CONNECTION'] ?? 'master')
                 );
             },
-            ConfigurationLoader::class => function(ContainerInterface $container) {
+            ConfigurationLoader::class => function (ContainerInterface $container) {
                 return new ConfigurationArray($container->has('config.migrations') ? $container->get('config.migrations') : []);
             },
-            'database.migrations.factory' => function(ContainerInterface $container) {
+            'database.migrations.factory' => function (ContainerInterface $container) {
                 $config = $container->has(ConfigurationLoader::class) ? $container->get(ConfigurationLoader::class) : null;
                 $connection = $container->has(Connection::class) ? $container->get(Connection::class) : null;
+
                 return DependencyFactory::fromConnection($config, new ExistingConnection($connection));
             },
-            Migration::class => function(ContainerInterface $container) {
+            Migration::class => function (ContainerInterface $container) {
                 $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+
                 return new Migration($factory);
-            }
+            },
         ];
     }
 

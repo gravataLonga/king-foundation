@@ -3,11 +3,7 @@
 namespace Gravatalonga\KingFoundation\Database;
 
 use Doctrine\Migrations\DependencyFactory;
-use Doctrine\Migrations\Exception\NoMigrationsFoundWithCriteria;
-use Doctrine\Migrations\Exception\NoMigrationsToExecute;
-use Doctrine\Migrations\Exception\UnknownMigrationVersion;
 use Doctrine\Migrations\MigratorConfiguration;
-use Symfony\Component\Console\Formatter\OutputFormatter;
 
 final class Migration
 {
@@ -25,6 +21,7 @@ final class Migration
     private function getMigratorConfiguration(): MigratorConfiguration
     {
         $migration = new MigratorConfiguration();
+
         return $migration->setDryRun(false)
             ->setAllOrNothing(true);
     }
@@ -39,8 +36,8 @@ final class Migration
 
         $version = $this->factory->getVersionAliasResolver()->resolveVersionAlias($versionStr);
 
-        $planCalculator                = $this->factory->getMigrationPlanCalculator();
-        $statusCalculator              = $this->factory->getMigrationStatusCalculator();
+        $planCalculator = $this->factory->getMigrationPlanCalculator();
+        $statusCalculator = $this->factory->getMigrationStatusCalculator();
         // $executedUnavailableMigrations = $statusCalculator->getExecutedUnavailableMigrations();
 
         $plan = $planCalculator->getPlanUntilVersion($version);
@@ -50,6 +47,7 @@ final class Migration
         }
 
         $migrator = $this->factory->getMigrator();
+
         return $migrator->migrate($plan, $this->getMigratorConfiguration());
     }
 }

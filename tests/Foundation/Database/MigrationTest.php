@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 class MigrationTest extends TestCase
 {
-
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -28,7 +27,7 @@ class MigrationTest extends TestCase
     /**
      * @test
      */
-    public function can_migrate_latest_version ()
+    public function can_migrate_latest_version()
     {
         $factory = DependencyFactory::fromConnection(
             new ConfigurationArray($this->migration('correct')),
@@ -48,7 +47,7 @@ class MigrationTest extends TestCase
     /**
      * @test
      */
-    public function throw_exception_if_migration_is_empty ()
+    public function throw_exception_if_migration_is_empty()
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('migration is empty');
@@ -65,7 +64,7 @@ class MigrationTest extends TestCase
     /**
      * @test
      */
-    public function there_arent_any_new_migration_to_execute ()
+    public function there_arent_any_new_migration_to_execute()
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('already in latest version');
@@ -84,7 +83,7 @@ class MigrationTest extends TestCase
     /**
      * @test
      */
-    public function can_migrate_first_version ()
+    public function can_migrate_first_version()
     {
         $factory = DependencyFactory::fromConnection(
             new ConfigurationArray($this->migration('correct')),
@@ -121,7 +120,7 @@ class MigrationTest extends TestCase
             ],
 
             'migrations_paths' => [
-                'Databases\Migrations' => './tests/stub/migrations/' . $path . '/'
+                'Databases\Migrations' => './tests/stub/migrations/' . $path . '/',
             ],
 
             'all_or_nothing' => true,

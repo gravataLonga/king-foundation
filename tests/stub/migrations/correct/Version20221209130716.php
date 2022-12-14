@@ -27,6 +27,5 @@ final class Version20221209130716 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $schema->dropTable('user');
-
     }
 }

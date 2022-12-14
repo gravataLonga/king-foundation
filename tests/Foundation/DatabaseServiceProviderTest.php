@@ -5,9 +5,9 @@ namespace Tests\Foundation;
 use Doctrine\DBAL\Connection;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationLoader;
 use Doctrine\Migrations\DependencyFactory;
-use Gravatalonga\KingFoundation\Database\Migration;
 use function Gravatalonga\Framework\container;
 use function Gravatalonga\Framework\instance;
+use Gravatalonga\KingFoundation\Database\Migration;
 use Gravatalonga\KingFoundation\DatabaseServiceProvider;
 use Gravatalonga\KingFoundation\Kernel;
 use PHPUnit\Framework\TestCase;
@@ -59,7 +59,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_dependency_factory ()
+    public function can_create_dependency_factory()
     {
         new Kernel(null, [
             new DatabaseServiceProvider(),
@@ -82,7 +82,7 @@ class DatabaseServiceProviderTest extends TestCase
             ],
 
             'migrations_paths' => [
-                'Databases\Migrations' => './resource/databases'
+                'Databases\Migrations' => './resource/databases',
             ],
 
             'all_or_nothing' => true,
