@@ -19,6 +19,7 @@
     "require": {
         "php": "^8.1",
         "doctrine/dbal": "^3.5",
+        "doctrine/migrations": "^3.5",
         "gravatalonga/driver-manager": "^1.0",
         "gravatalonga/framework": "^1.0",
         "league/tactician": "^1.1",

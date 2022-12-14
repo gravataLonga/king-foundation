@@ -2,7 +2,7 @@
 
 namespace Tests\Testing;
 
-use Gravatalonga\KingFoundation\Testing\TraitRequest;
+use Gravatalonga\KingFoundation\Testing\InteractHttp;
 use PHPUnit\Framework\TestCase;
 
 class TraitRequestTest extends TestCase
@@ -10,7 +10,7 @@ class TraitRequestTest extends TestCase
     public function getTraitRequest(): object
     {
         return new class() {
-            use TraitRequest;
+            use InteractHttp;
         };
     }
 

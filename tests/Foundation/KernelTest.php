@@ -4,7 +4,7 @@ namespace Tests\Foundation;
 
 use Gravatalonga\KingFoundation\Kernel;
 use Gravatalonga\KingFoundation\SlimServiceProvider;
-use Gravatalonga\KingFoundation\Testing\TraitRequest;
+use Gravatalonga\KingFoundation\Testing\InteractHttp;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Request;
@@ -16,7 +16,7 @@ use Slim\Routing\RouteCollectorProxy;
  */
 class KernelTest extends TestCase
 {
-    use TraitRequest;
+    use InteractHttp;
 
     public Kernel $http;
 

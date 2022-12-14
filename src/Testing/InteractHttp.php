@@ -7,14 +7,17 @@ use Slim\Psr7\Headers;
 use Slim\Psr7\Request;
 use Slim\Psr7\Uri;
 
-trait TraitRequest
+trait InteractHttp
 {
     public function createRequest(string $method, string $uri, ?string $payload = null, array $headers = []): Request
     {
-        $handle = fopen('php://temp', 'w+');
-        $stream = (new StreamFactory())->createStreamFromResource($handle);
+        $stream = new StreamFactory();
+        $stream = $stream->createStream('');
 
         if (! empty($payload)) {
+            $stream = new StreamFactory();
+            $handle = fopen('php://temp', 'w+');
+            $stream = $stream->createStreamFromResource($handle);
             $stream->write($payload);
         }
 
