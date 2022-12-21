@@ -21,7 +21,7 @@
         "doctrine/dbal": "^3.5",
         "doctrine/migrations": "^3.5",
         "gravatalonga/driver-manager": "^1.0",
-        "gravatalonga/framework": ">=1.0.10",
+        "gravatalonga/framework": "^1.0.10",
         "league/tactician": "^1.1",
         "league/tactician-container": "^3.0",
         "monolog/monolog": "^3.2",

@@ -21,6 +21,7 @@ class SlimServiceProviderTest extends TestCase
         $service = new SlimServiceProvider();
         $entries = $service->factories();
 
+        $this->assertEmpty($service->extensions());
         $this->assertArrayHasKey(ResponseFactoryInterface::class, $entries);
         $this->assertArrayHasKey(CallableResolverInterface::class, $entries);
         $this->assertArrayHasKey(RouteCollectorInterface::class, $entries);

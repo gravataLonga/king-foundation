@@ -37,7 +37,7 @@ final class Migration
         $version = $this->factory->getVersionAliasResolver()->resolveVersionAlias($versionStr);
 
         $planCalculator = $this->factory->getMigrationPlanCalculator();
-        $statusCalculator = $this->factory->getMigrationStatusCalculator();
+        // $statusCalculator = $this->factory->getMigrationStatusCalculator();
         // $executedUnavailableMigrations = $statusCalculator->getExecutedUnavailableMigrations();
 
         $plan = $planCalculator->getPlanUntilVersion($version);
