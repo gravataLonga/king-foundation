@@ -58,6 +58,94 @@ class DatabaseServiceProvider implements ServiceProvider
 
                 return new Migration($factory);
             },
+
+            // Commands
+            CurrentCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+
+                return new CurrentCommand($factory);
+            },
+            DumpSchemaCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+
+                return new CurrentCommand($factory);
+            },
+            ExecuteCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new ExecuteCommand($factory);
+            },
+            GenerateCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new GenerateCommand($factory);
+            },
+            LatestCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new LatestCommand($factory);
+            },
+            MigrateCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new MigrateCommand($factory);
+            },
+            RollupCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new RollupCommand($factory);
+            },
+            StatusCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new StatusCommand($factory);
+            },
+            VersionCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new VersionCommand($factory);
+            },
+            UpToDateCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new UpToDateCommand($factory);
+            },
+            SyncMetadataCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new SyncMetadataCommand($factory);
+            },
+            ListCommand::class => function(ContainerInterface $container) {
+                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
+                if ($factory === null) {
+                    return null;
+                }
+                return new ListCommand($factory);
+            },
         ];
     }
 
@@ -65,24 +153,19 @@ class DatabaseServiceProvider implements ServiceProvider
     {
         return [
             'config.console' => function (ContainerInterface $container, array $previous = []) {
-                $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
-                if ($factory === null) {
-                    return $previous;
-                }
-
                 return array_merge([
-                    new CurrentCommand($factory),
-                    new DumpSchemaCommand($factory),
-                    new ExecuteCommand($factory),
-                    new GenerateCommand($factory),
-                    new LatestCommand($factory),
-                    new MigrateCommand($factory),
-                    new RollupCommand($factory),
-                    new StatusCommand($factory),
-                    new VersionCommand($factory),
-                    new UpToDateCommand($factory),
-                    new SyncMetadataCommand($factory),
-                    new ListCommand($factory),
+                    'migrations:current' => CurrentCommand::class,
+                    'migrations:dump-schema' => DumpSchemaCommand::class,
+                    'migrations:execute' => ExecuteCommand::class,
+                    'migrations:generate' => GenerateCommand::class,
+                    'migrations:latest' => LatestCommand::class,
+                    'migrations:migrate' => MigrateCommand::class,
+                    'migrations:rollup' => RollupCommand::class,
+                    'migrations:status' => StatusCommand::class,
+                    'migrations:version' => VersionCommand::class,
+                    'migrations:up-to-date' => UpToDateCommand::class,
+                    'migrations:sync-metadata-storage' => SyncMetadataCommand::class,
+                    'migrations:list' => ListCommand::class
                 ], $previous);
             },
         ];

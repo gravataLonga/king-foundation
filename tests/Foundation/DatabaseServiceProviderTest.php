@@ -48,6 +48,19 @@ class DatabaseServiceProviderTest extends TestCase
         $this->assertArrayHasKey('database.migrations.factory', $entries);
         $this->assertArrayHasKey(Migration::class, $entries);
         $this->assertArrayHasKey('config.console', $extends);
+
+        $this->assertArrayHasKey(CurrentCommand::class, $entries);
+        $this->assertArrayHasKey(DumpSchemaCommand::class, $entries);
+        $this->assertArrayHasKey(ExecuteCommand::class, $entries);
+        $this->assertArrayHasKey(GenerateCommand::class, $entries);
+        $this->assertArrayHasKey(LatestCommand::class, $entries);
+        $this->assertArrayHasKey(MigrateCommand::class, $entries);
+        $this->assertArrayHasKey(RollupCommand::class, $entries);
+        $this->assertArrayHasKey(StatusCommand::class, $entries);
+        $this->assertArrayHasKey(VersionCommand::class, $entries);
+        $this->assertArrayHasKey(UpToDateCommand::class, $entries);
+        $this->assertArrayHasKey(SyncMetadataCommand::class, $entries);
+        $this->assertArrayHasKey(ListCommand::class, $entries);
     }
 
     /**
@@ -194,20 +207,31 @@ class DatabaseServiceProviderTest extends TestCase
         ]);
 
         $consoles = instance('config.console');
-        $consoles = array_values($consoles);
 
+        $this->assertArrayHasKey('migrations:current', $consoles);
+        $this->assertArrayHasKey('migrations:dump-schema', $consoles);
+        $this->assertArrayHasKey('migrations:execute', $consoles);
+        $this->assertArrayHasKey('migrations:generate', $consoles);
+        $this->assertArrayHasKey('migrations:latest', $consoles);
+        $this->assertArrayHasKey('migrations:migrate', $consoles);
+        $this->assertArrayHasKey('migrations:rollup', $consoles);
+        $this->assertArrayHasKey('migrations:status', $consoles);
+        $this->assertArrayHasKey('migrations:version', $consoles);
+        $this->assertArrayHasKey('migrations:up-to-date', $consoles);
+        $this->assertArrayHasKey('migrations:sync-metadata-storage', $consoles);
+        $this->assertArrayHasKey('migrations:list', $consoles);
 
-        $this->assertInstanceOf(CurrentCommand::class, $consoles[0]);
-        $this->assertInstanceOf(DumpSchemaCommand::class, $consoles[1]);
-        $this->assertInstanceOf(ExecuteCommand::class, $consoles[2]);
-        $this->assertInstanceOf(GenerateCommand::class, $consoles[3]);
-        $this->assertInstanceOf(LatestCommand::class, $consoles[4]);
-        $this->assertInstanceOf(MigrateCommand::class, $consoles[5]);
-        $this->assertInstanceOf(RollupCommand::class, $consoles[6]);
-        $this->assertInstanceOf(StatusCommand::class, $consoles[7]);
-        $this->assertInstanceOf(VersionCommand::class, $consoles[8]);
-        $this->assertInstanceOf(UpToDateCommand::class, $consoles[9]);
-        $this->assertInstanceOf(SyncMetadataCommand::class, $consoles[10]);
-        $this->assertInstanceOf(ListCommand::class, $consoles[11]);
+        $this->assertContains(CurrentCommand::class, $consoles);
+        $this->assertContains(DumpSchemaCommand::class, $consoles);
+        $this->assertContains(ExecuteCommand::class, $consoles);
+        $this->assertContains(GenerateCommand::class, $consoles);
+        $this->assertContains(LatestCommand::class, $consoles);
+        $this->assertContains(MigrateCommand::class, $consoles);
+        $this->assertContains(RollupCommand::class, $consoles);
+        $this->assertContains(StatusCommand::class, $consoles);
+        $this->assertContains(VersionCommand::class, $consoles);
+        $this->assertContains(UpToDateCommand::class, $consoles);
+        $this->assertContains(SyncMetadataCommand::class, $consoles);
+        $this->assertContains(ListCommand::class, $consoles);
     }
 }
