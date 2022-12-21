@@ -64,7 +64,7 @@ class DatabaseServiceProvider implements ServiceProvider
     public function extensions(): array
     {
         return [
-            'config.console' => function(ContainerInterface $container, array $previous = []) {
+            'config.console' => function (ContainerInterface $container, array $previous = []) {
                 $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
                 if ($factory === null) {
                     return $previous;
@@ -84,7 +84,7 @@ class DatabaseServiceProvider implements ServiceProvider
                     new SyncMetadataCommand($factory),
                     new ListCommand($factory),
                 ], $previous);
-            }
+            },
         ];
     }
 }

@@ -10,17 +10,17 @@ use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
 use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
 use Doctrine\Migrations\Tools\Console\Command\LatestCommand;
+use Doctrine\Migrations\Tools\Console\Command\ListCommand;
 use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
 use Doctrine\Migrations\Tools\Console\Command\RollupCommand;
 use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
 use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
-use Gravatalonga\Framework\ServiceProvider;
-use Gravatalonga\KingFoundation\ConsoleServiceProvider;
-use Doctrine\Migrations\Tools\Console\Command\ListCommand;
 use function Gravatalonga\Framework\container;
 use function Gravatalonga\Framework\instance;
+use Gravatalonga\Framework\ServiceProvider;
+use Gravatalonga\KingFoundation\ConsoleServiceProvider;
 use Gravatalonga\KingFoundation\Database\Migration;
 use Gravatalonga\KingFoundation\DatabaseServiceProvider;
 use Gravatalonga\KingFoundation\Kernel;
@@ -56,12 +56,11 @@ class DatabaseServiceProviderTest extends TestCase
     public function can_create_connection_from_service_provider()
     {
         new Kernel(null, [
-            new class() implements ServiceProvider
-            {
+            new class() implements ServiceProvider {
                 public function factories(): array
                 {
                     return [
-                        'config.console' => []
+                        'config.console' => [],
                     ];
                 }
 
@@ -93,12 +92,11 @@ class DatabaseServiceProviderTest extends TestCase
     public function can_create_dependency_factory()
     {
         new Kernel(null, [
-            new class() implements ServiceProvider
-            {
+            new class() implements ServiceProvider {
                 public function factories(): array
                 {
                     return [
-                        'config.console' => []
+                        'config.console' => [],
                     ];
                 }
 
@@ -147,15 +145,14 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function it_bind_commands_to_applications ()
+    public function it_bind_commands_to_applications()
     {
         new Kernel(null, [
-            new class() implements ServiceProvider
-            {
+            new class() implements ServiceProvider {
                 public function factories(): array
                 {
                     return [
-                        'config.console' => []
+                        'config.console' => [],
                     ];
                 }
 
