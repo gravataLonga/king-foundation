@@ -74,7 +74,7 @@ class DatabaseServiceProvider implements ServiceProvider
                     return null;
                 }
 
-                return new CurrentCommand($factory);
+                return new DumpSchemaCommand($factory);
             },
             ExecuteCommand::class => function(ContainerInterface $container) {
                 $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
