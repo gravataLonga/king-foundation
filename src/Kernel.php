@@ -107,6 +107,7 @@ final class Kernel
 
         $this->app->register(new DotEnvServiceProvider());
         $this->app->boot();
+        // Necessary in order to boot service provider of DotEnvServiceProvider
         $this->app->getContainer()->get('env');
     }
 

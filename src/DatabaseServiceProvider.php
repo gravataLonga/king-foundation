@@ -32,11 +32,19 @@ class DatabaseServiceProvider implements ServiceProvider
     public function factories(): array
     {
         return [
+
+            /**
+             * Manager Configuration
+             */
             'database.connections' => function (ContainerInterface $container) {
                 $config = $container->has('config.databases') ? $container->get('config.databases') : [];
 
                 return new Manager($config);
             },
+
+            /**
+             * DBAL Connection
+             */
             Connection::class => function (ContainerInterface $container) {
                 $driver = $container->get('database.connections');
 
@@ -44,15 +52,28 @@ class DatabaseServiceProvider implements ServiceProvider
                     $driver->driver($_ENV['DATABASE_CONNECTION'] ?? 'master')
                 );
             },
+
+            /**
+             * Configuration for Migration
+             */
             ConfigurationLoader::class => function (ContainerInterface $container) {
                 return new ConfigurationArray($container->has('config.migrations') ? $container->get('config.migrations') : []);
             },
+
+            /**
+             * Factory of Migration
+             */
             'database.migrations.factory' => function (ContainerInterface $container) {
                 $config = $container->has(ConfigurationLoader::class) ? $container->get(ConfigurationLoader::class) : null;
                 $connection = $container->has(Connection::class) ? $container->get(Connection::class) : null;
 
                 return DependencyFactory::fromConnection($config, new ExistingConnection($connection));
             },
+
+            /**
+             * Internal class of Migration.
+             * Usefull when using UnitTesting
+             */
             Migration::class => function (ContainerInterface $container) {
                 $factory = $container->has('database.migrations.factory') ? $container->get('database.migrations.factory') : null;
 
