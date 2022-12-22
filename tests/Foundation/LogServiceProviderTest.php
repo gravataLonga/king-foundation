@@ -9,7 +9,6 @@ use Gravatalonga\Framework\ValueObject\Path;
 use Gravatalonga\KingFoundation\LogServiceProvider;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\TagProcessor;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +19,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function get_entries ()
+    public function get_entries()
     {
         $service = new LogServiceProvider();
         $entries = $service->factories();
@@ -36,7 +35,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_manager_if_container_is_empty ()
+    public function can_get_manager_if_container_is_empty()
     {
         $service = new LogServiceProvider();
         $container = new Container();
@@ -50,7 +49,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_build_manager_from_configuration_of_container ()
+    public function can_build_manager_from_configuration_of_container()
     {
         $service = new LogServiceProvider();
         $container = new Container([
@@ -61,10 +60,10 @@ class LogServiceProviderTest extends TestCase
                     'default' => [
                         'level' => \Monolog\Level::Warning,
                         'name' => 'log.txt',
-                        'handler' => ['single']
-                    ]
-                ]
-            ]
+                        'handler' => ['single'],
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -82,7 +81,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function driver_must_throw_exception_if_not_provider_required_requirment_level ()
+    public function driver_must_throw_exception_if_not_provider_required_requirment_level()
     {
         $this->expectException(ExceptionManager::class);
         $this->expectExceptionMessage(ExceptionManager::driverMissingRequiredKey('default', 'leve')->getMessage());
@@ -95,10 +94,10 @@ class LogServiceProviderTest extends TestCase
                 'drivers' => [
                     'default' => [
                         'name' => 'log.txt',
-                        'handler' => []
-                    ]
-                ]
-            ]
+                        'handler' => [],
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -109,7 +108,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function driver_must_throw_exception_if_not_provider_required_requirment_handler ()
+    public function driver_must_throw_exception_if_not_provider_required_requirment_handler()
     {
         $this->expectException(ExceptionManager::class);
         $this->expectExceptionMessage(ExceptionManager::driverMissingRequiredKey('default', 'handler')->getMessage());
@@ -123,9 +122,9 @@ class LogServiceProviderTest extends TestCase
                     'default' => [
                         'name' => 'log.txt',
                         'level' => \Monolog\Level::Warning,
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -136,7 +135,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function driver_have_default_parameters_processor ()
+    public function driver_have_default_parameters_processor()
     {
         $service = new LogServiceProvider();
         $container = new Container([
@@ -147,10 +146,10 @@ class LogServiceProviderTest extends TestCase
                     'default' => [
                         'name' => 'log.txt',
                         'level' => \Monolog\Level::Warning,
-                        'handler' => ['null']
-                    ]
-                ]
-            ]
+                        'handler' => ['null'],
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -164,7 +163,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_stream_handler ()
+    public function can_get_stream_handler()
     {
         $service = new LogServiceProvider();
         $container = new Container([
@@ -176,10 +175,10 @@ class LogServiceProviderTest extends TestCase
                     'default' => [
                         'level' => \Monolog\Level::Warning,
                         'name' => 'log.txt',
-                        'handler' => ['single']
-                    ]
-                ]
-            ]
+                        'handler' => ['single'],
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -193,7 +192,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_log_instance_with_null_handler ()
+    public function can_create_log_instance_with_null_handler()
     {
         $service = new LogServiceProvider();
         $container = new Container([
@@ -205,10 +204,10 @@ class LogServiceProviderTest extends TestCase
                     'default' => [
                         'level' => \Monolog\Level::Warning,
                         'name' => 'log.txt',
-                        'handler' => ['null']
-                    ]
-                ]
-            ]
+                        'handler' => ['null'],
+                    ],
+                ],
+            ],
 
         ]);
         $entries = $service->factories();
@@ -228,7 +227,7 @@ class LogServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_log_instance_with_processor ()
+    public function can_create_log_instance_with_processor()
     {
         $service = new LogServiceProvider();
         $container = new Container([
@@ -241,11 +240,11 @@ class LogServiceProviderTest extends TestCase
                         'level' => \Monolog\Level::Warning,
                         'name' => 'log.txt',
                         'handler' => ['null'],
-                        'processor' => ['tag']
-                    ]
-                ]
+                        'processor' => ['tag'],
+                    ],
+                ],
             ],
-            'logger.processor.tag' => new TagProcessor(['super'])
+            'logger.processor.tag' => new TagProcessor(['super']),
 
         ]);
         $entries = $service->factories();
@@ -261,5 +260,4 @@ class LogServiceProviderTest extends TestCase
         $this->assertCount(1, $logger->getProcessors());
         $this->assertInstanceOf(TagProcessor::class, $logger->getProcessors()[0]);
     }
-
 }

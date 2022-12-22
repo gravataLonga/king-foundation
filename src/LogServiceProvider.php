@@ -20,13 +20,14 @@ class LogServiceProvider implements ServiceProvider
         return [
             'logger.manager' => function (ContainerInterface $container) {
                 $configuration = $container->has('config.log') ? $container->get('config.log') : [];
+
                 return new Manager(
                     $configuration['drivers'] ?? [],
                     ['level', 'handler'],
                     ['processor' => []]
                 );
             },
-            'logger.handler.null' => function(ContainerInterface $container) {
+            'logger.handler.null' => function (ContainerInterface $container) {
                 return new NullHandler();
             },
             'logger.handler.single' => function (ContainerInterface $container) {
