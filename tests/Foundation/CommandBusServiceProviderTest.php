@@ -29,7 +29,7 @@ class CommandBusServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_built_container_locator ()
+    public function can_built_container_locator()
     {
         $container = new Container();
         $provider = new CommandBusServiceProvider();
@@ -43,7 +43,7 @@ class CommandBusServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_built_command_bus ()
+    public function can_built_command_bus()
     {
         $container = new Container();
         $container->share(ContainerLocator::class, function (ContainerInterface $container) {
