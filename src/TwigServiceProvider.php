@@ -15,19 +15,19 @@ class TwigServiceProvider implements ServiceProvider
     public function factories(): array
     {
         return [
-            'twig.filter' => function(ContainerInterface $container) {
+            'twig.filter' => function (ContainerInterface $container) {
                 return [];
             },
-            'twig.global' => function(ContainerInterface $container) {
+            'twig.global' => function (ContainerInterface $container) {
                 return [];
             },
-            'twig.function' => function(ContainerInterface $container) {
+            'twig.function' => function (ContainerInterface $container) {
                 return [];
             },
-            'twig.test' => function(ContainerInterface $container) {
+            'twig.test' => function (ContainerInterface $container) {
                 return [];
             },
-            'twig.extension' => function(ContainerInterface $container) {
+            'twig.extension' => function (ContainerInterface $container) {
                 return [];
             },
             'twig.loader' => function (ContainerInterface $container) {
@@ -110,9 +110,9 @@ class TwigServiceProvider implements ServiceProvider
 
                 return $twig;
             },
-            'twig' => function(ContainerInterface $container) {
+            'twig' => function (ContainerInterface $container) {
                 return $container->get(Environment::class);
-            }
+            },
         ];
     }
 

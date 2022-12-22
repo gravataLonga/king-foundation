@@ -15,7 +15,7 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function get_entries ()
+    public function get_entries()
     {
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
@@ -37,10 +37,10 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_twig_instance ()
+    public function can_create_twig_instance()
     {
         $container = new Container([
-            'path.resource' => new Path('./tests/stub')
+            'path.resource' => new Path('./tests/stub'),
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
@@ -54,22 +54,22 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_add_filters ()
+    public function can_add_filters()
     {
         $container = new Container([
             'path.resource' => new Path('./tests/stub'),
             'twig.filter' => ['md5'],
-            'twig.filter.md5' => function(ContainerInterface $container) {
+            'twig.filter.md5' => function (ContainerInterface $container) {
                 return new \Twig\TwigFilter('md5', function ($string) {
                     return md5($string);
                 });
-            }
+            },
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
         $container->share('twig.loader', function (ContainerInterface $container) {
             return new ArrayLoader([
-                'default' => '{{ \'hello\'|md5 }}'
+                'default' => '{{ \'hello\'|md5 }}',
             ]);
         });
 
