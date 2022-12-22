@@ -24,6 +24,9 @@ class CommandBusServiceProviderTest extends TestCase
 
         $this->assertArrayHasKey(ContainerLocator::class, $entries);
         $this->assertArrayHasKey(CommandBus::class, $entries);
+        $this->assertArrayHasKey('bus.middleware', $entries);
+        $this->assertArrayHasKey('bus.middleware.command', $entries);
+        $this->assertArrayHasKey('bus.middleware.lock', $entries);
     }
 
     /**
@@ -45,7 +48,7 @@ class CommandBusServiceProviderTest extends TestCase
      */
     public function can_built_command_bus()
     {
-        $container = new Container();
+        $container = new Container(['bus.middleware' => ['lock', 'command']]);
         $container->share(ContainerLocator::class, function (ContainerInterface $container) {
             return new ContainerLocator($container, []);
         });

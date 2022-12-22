@@ -15,6 +15,21 @@ class TwigServiceProvider implements ServiceProvider
     public function factories(): array
     {
         return [
+            'twig.filter' => function(ContainerInterface $container) {
+                return [];
+            },
+            'twig.global' => function(ContainerInterface $container) {
+                return [];
+            },
+            'twig.function' => function(ContainerInterface $container) {
+                return [];
+            },
+            'twig.test' => function(ContainerInterface $container) {
+                return [];
+            },
+            'twig.extension' => function(ContainerInterface $container) {
+                return [];
+            },
             'twig.loader' => function (ContainerInterface $container) {
                 $storage = $container->has('path.resource') ? $container->get('path.resource') : new Path(__DIR__);
 
@@ -31,8 +46,73 @@ class TwigServiceProvider implements ServiceProvider
             Environment::class => function (ContainerInterface $container) {
                 $options = $container->has('twig.options') ? $container->get('twig.options') : [];
 
-                return new Environment($container->get('twig.loader'), $options);
+                $twig = new Environment($container->get('twig.loader'), $options);
+
+                // Filters...
+                if ($container->has('twig.filter')) {
+                    $filters = $container->get('twig.filter');
+                    foreach ($filters as $filter) {
+                        if (! $container->has('twig.filter.'.$filter)) {
+                            continue;
+                        }
+
+                        $twig->addFilter($container->get('twig.filter.'.$filter));
+                    }
+                }
+
+                // Globals...
+                if ($container->has('twig.global')) {
+                    $globals = $container->get('twig.global');
+                    foreach ($globals as $global) {
+                        if (! $container->has('twig.global.'.$global)) {
+                            continue;
+                        }
+
+                        $twig->addFilter($container->get('twig.global.'.$global));
+                    }
+                }
+
+                // Functions...
+                if ($container->has('twig.function')) {
+                    $functions = $container->get('twig.function');
+                    foreach ($functions as $fn) {
+                        if (! $container->has('twig.function.'.$fn)) {
+                            continue;
+                        }
+
+                        $twig->addFilter($container->get('twig.function.'.$fn));
+                    }
+                }
+
+                // Tests...
+                if ($container->has('twig.test')) {
+                    $tests = $container->get('twig.test');
+                    foreach ($tests as $test) {
+                        if (! $container->has('twig.test.'.$test)) {
+                            continue;
+                        }
+
+                        $twig->addFilter($container->get('twig.test.'.$test));
+                    }
+                }
+
+                // Extensions...
+                if ($container->has('twig.extension')) {
+                    $extensions = $container->get('twig.extension');
+                    foreach ($extensions as $ext) {
+                        if (! $container->has('twig.extension.'.$ext)) {
+                            continue;
+                        }
+
+                        $twig->addFilter($container->get('twig.extension.'.$ext));
+                    }
+                }
+
+                return $twig;
             },
+            'twig' => function(ContainerInterface $container) {
+                return $container->get(Environment::class);
+            }
         ];
     }
 

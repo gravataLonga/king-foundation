@@ -21,16 +21,32 @@ class CommandBusServiceProvider implements ServiceProvider
             ContainerLocator::class => function (ContainerInterface $container) {
                 return new ContainerLocator($container, $container->has('config.commands') ? $container->get('config.commands') : []);
             },
-            CommandBus::class => function (ContainerInterface $container) {
-                $handlerMiddleware = new CommandHandlerMiddleware(
+            'bus.middleware.lock' => function(ContainerInterface $container) {
+                return new LockingMiddleware();
+            },
+            'bus.middleware.command' => function(ContainerInterface $container) {
+                return new CommandHandlerMiddleware(
                     new ClassNameExtractor(),
                     $container->get(ContainerLocator::class),
                     new HandleInflector()
                 );
-
-                $lockingMiddleware = new LockingMiddleware();
-
-                return new CommandBus([$lockingMiddleware, $handlerMiddleware]);
+            },
+            'bus.middleware' => function(ContainerInterface $container) {
+                return [
+                    'lock',
+                    'command'
+                ];
+            },
+            CommandBus::class => function (ContainerInterface $container) {
+                $middlewares = $container->get('bus.middleware');
+                $middlewaresInstances = [];
+                foreach ($middlewares as $middleware) {
+                    if (! $container->has('bus.middleware.'.$middleware)) {
+                        continue;
+                    }
+                    $middlewaresInstances = $container->get('bus.middleware.'.$middleware);
+                }
+                return new CommandBus($middlewaresInstances);
             },
         ];
     }
