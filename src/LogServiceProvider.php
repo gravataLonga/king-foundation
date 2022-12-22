@@ -63,11 +63,11 @@ class LogServiceProvider implements ServiceProvider
                     }
                 }
 
-                $handlers = $log['processor'];
-                foreach ($handlers as $handler) {
-                    if ($container->has('logger.processor.' . $handler)) {
-                        $handlerInstance = $container->get('logger.processor.' . $handler);
-                        $logger->pushProcessor($handlerInstance);
+                $processors = $log['processor'];
+                foreach ($processors as $processor) {
+                    if ($container->has('logger.processor.' . $processor)) {
+                        $processoInstance = $container->get('logger.processor.' . $processor);
+                        $logger->pushProcessor($processoInstance);
                     }
                 }
 
