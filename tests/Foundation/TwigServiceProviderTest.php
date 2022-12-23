@@ -85,24 +85,25 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_add_globals ()
+    public function can_add_globals()
     {
         $container = new Container([
             'path.resource' => new Path('./tests/stub'),
             'twig.global' => ['text'],
-            'twig.global.text' => function(ContainerInterface $container) {
+            'twig.global.text' => function (ContainerInterface $container) {
                 return new class() {
-                    public function hello() {
+                    public function hello()
+                    {
                         return 'hello world';
                     }
                 };
-            }
+            },
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
         $container->share('twig.loader', function (ContainerInterface $container) {
             return new ArrayLoader([
-                'default' => '{{ text.hello() }}'
+                'default' => '{{ text.hello() }}',
             ]);
         });
 
@@ -117,22 +118,22 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_add_function ()
+    public function can_add_function()
     {
         $container = new Container([
             'path.resource' => new Path('./tests/stub'),
             'twig.function' => ['text'],
-            'twig.function.text' => function(ContainerInterface $container) {
+            'twig.function.text' => function (ContainerInterface $container) {
                 return new \Twig\TwigFunction('text', function () {
                     return 'hello world';
                 });
-            }
+            },
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
         $container->share('twig.loader', function (ContainerInterface $container) {
             return new ArrayLoader([
-                'default' => '{{ text() }}'
+                'default' => '{{ text() }}',
             ]);
         });
 
@@ -147,22 +148,22 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_add_test ()
+    public function can_add_test()
     {
         $container = new Container([
             'path.resource' => new Path('./tests/stub'),
             'twig.test' => ['odd'],
-            'twig.test.odd' => function(ContainerInterface $container) {
+            'twig.test.odd' => function (ContainerInterface $container) {
                 return new \Twig\TwigTest('odd', function (int $number) {
                     return $number % 2 !== 0;
                 });
-            }
+            },
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
         $container->share('twig.loader', function (ContainerInterface $container) {
             return new ArrayLoader([
-                'default' => '{% if 3 is odd %}number is odd{% endif %}'
+                'default' => '{% if 3 is odd %}number is odd{% endif %}',
             ]);
         });
 
@@ -177,27 +178,27 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_add_extensions ()
+    public function can_add_extensions()
     {
         $container = new Container([
             'path.resource' => new Path('./tests/stub'),
             'twig.extension' => ['simple'],
-            'twig.extension.simple' => function(ContainerInterface $container) {
+            'twig.extension.simple' => function (ContainerInterface $container) {
                 return new class() extends AbstractExtension {
                     public function getFilters()
                     {
                         return [
-                            new \Twig\TwigFilter('rot13', 'str_rot13')
+                            new \Twig\TwigFilter('rot13', 'str_rot13'),
                         ];
                     }
                 };
-            }
+            },
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();
         $container->share('twig.loader', function (ContainerInterface $container) {
             return new ArrayLoader([
-                'default' => '{{ \'hello\'|rot13 }}'
+                'default' => '{{ \'hello\'|rot13 }}',
             ]);
         });
 
