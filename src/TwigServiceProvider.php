@@ -68,7 +68,7 @@ class TwigServiceProvider implements ServiceProvider
                             continue;
                         }
 
-                        $twig->addFilter($container->get('twig.global.'.$global));
+                        $twig->addGlobal($global, $container->get('twig.global.'.$global));
                     }
                 }
 
@@ -80,7 +80,7 @@ class TwigServiceProvider implements ServiceProvider
                             continue;
                         }
 
-                        $twig->addFilter($container->get('twig.function.'.$fn));
+                        $twig->addFunction($container->get('twig.function.'.$fn));
                     }
                 }
 
@@ -92,7 +92,7 @@ class TwigServiceProvider implements ServiceProvider
                             continue;
                         }
 
-                        $twig->addFilter($container->get('twig.test.'.$test));
+                        $twig->addTest($container->get('twig.test.'.$test));
                     }
                 }
 
@@ -104,7 +104,7 @@ class TwigServiceProvider implements ServiceProvider
                             continue;
                         }
 
-                        $twig->addFilter($container->get('twig.extension.'.$ext));
+                        $twig->addExtension($container->get('twig.extension.'.$ext));
                     }
                 }
 

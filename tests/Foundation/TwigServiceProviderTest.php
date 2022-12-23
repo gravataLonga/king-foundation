@@ -8,6 +8,7 @@ use Gravatalonga\KingFoundation\TwigServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
+use Twig\Extension\AbstractExtension;
 use Twig\Loader\ArrayLoader;
 
 class TwigServiceProviderTest extends TestCase
@@ -79,5 +80,132 @@ class TwigServiceProviderTest extends TestCase
 
         $this->assertNotEmpty($output);
         $this->assertEquals('5d41402abc4b2a76b9719d911017c592', $output);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_globals ()
+    {
+        $container = new Container([
+            'path.resource' => new Path('./tests/stub'),
+            'twig.global' => ['text'],
+            'twig.global.text' => function(ContainerInterface $container) {
+                return new class() {
+                    public function hello() {
+                        return 'hello world';
+                    }
+                };
+            }
+        ]);
+        $provider = new TwigServiceProvider();
+        $entries = $provider->factories();
+        $container->share('twig.loader', function (ContainerInterface $container) {
+            return new ArrayLoader([
+                'default' => '{{ text.hello() }}'
+            ]);
+        });
+
+        /** @var Environment $twig */
+        $twig = $entries[Environment::class]($container);
+        $output = $twig->render('default');
+
+        $this->assertNotEmpty($output);
+        $this->assertEquals('hello world', $output);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_function ()
+    {
+        $container = new Container([
+            'path.resource' => new Path('./tests/stub'),
+            'twig.function' => ['text'],
+            'twig.function.text' => function(ContainerInterface $container) {
+                return new \Twig\TwigFunction('text', function () {
+                    return 'hello world';
+                });
+            }
+        ]);
+        $provider = new TwigServiceProvider();
+        $entries = $provider->factories();
+        $container->share('twig.loader', function (ContainerInterface $container) {
+            return new ArrayLoader([
+                'default' => '{{ text() }}'
+            ]);
+        });
+
+        /** @var Environment $twig */
+        $twig = $entries[Environment::class]($container);
+        $output = $twig->render('default');
+
+        $this->assertNotEmpty($output);
+        $this->assertEquals('hello world', $output);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_test ()
+    {
+        $container = new Container([
+            'path.resource' => new Path('./tests/stub'),
+            'twig.test' => ['odd'],
+            'twig.test.odd' => function(ContainerInterface $container) {
+                return new \Twig\TwigTest('odd', function (int $number) {
+                    return $number % 2 !== 0;
+                });
+            }
+        ]);
+        $provider = new TwigServiceProvider();
+        $entries = $provider->factories();
+        $container->share('twig.loader', function (ContainerInterface $container) {
+            return new ArrayLoader([
+                'default' => '{% if 3 is odd %}number is odd{% endif %}'
+            ]);
+        });
+
+        /** @var Environment $twig */
+        $twig = $entries[Environment::class]($container);
+        $output = $twig->render('default');
+
+        $this->assertNotEmpty($output);
+        $this->assertEquals('number is odd', $output);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_extensions ()
+    {
+        $container = new Container([
+            'path.resource' => new Path('./tests/stub'),
+            'twig.extension' => ['simple'],
+            'twig.extension.simple' => function(ContainerInterface $container) {
+                return new class() extends AbstractExtension {
+                    public function getFilters()
+                    {
+                        return [
+                            new \Twig\TwigFilter('rot13', 'str_rot13')
+                        ];
+                    }
+                };
+            }
+        ]);
+        $provider = new TwigServiceProvider();
+        $entries = $provider->factories();
+        $container->share('twig.loader', function (ContainerInterface $container) {
+            return new ArrayLoader([
+                'default' => '{{ \'hello\'|rot13 }}'
+            ]);
+        });
+
+        /** @var Environment $twig */
+        $twig = $entries[Environment::class]($container);
+        $output = $twig->render('default');
+
+        $this->assertNotEmpty($output);
+        $this->assertEquals('uryyb', $output);
     }
 }
