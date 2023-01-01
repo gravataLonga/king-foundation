@@ -213,10 +213,10 @@ class TwigServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function get_empty_array_on_each_plugin_section ()
+    public function get_empty_array_on_each_plugin_section()
     {
         $container = new Container([
-            'path.resource' => new Path('./tests/stub')
+            'path.resource' => new Path('./tests/stub'),
         ]);
         $provider = new TwigServiceProvider();
         $entries = $provider->factories();

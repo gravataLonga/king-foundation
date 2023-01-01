@@ -33,7 +33,7 @@ class SlimServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_response_factory ()
+    public function can_create_response_factory()
     {
         $container = new Container();
         $service = new SlimServiceProvider();
@@ -47,7 +47,7 @@ class SlimServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_callable_resolver_interface ()
+    public function can_create_callable_resolver_interface()
     {
         $container = new Container();
         $service = new SlimServiceProvider();
@@ -61,11 +61,11 @@ class SlimServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_create_router_collector ()
+    public function can_create_router_collector()
     {
         $container = new Container([
             CallableResolverInterface::class => new CallableResolver(),
-            ResponseFactoryInterface::class => AppFactory::determineResponseFactory()
+            ResponseFactoryInterface::class => AppFactory::determineResponseFactory(),
         ]);
         $service = new SlimServiceProvider();
         $entries = $service->factories();

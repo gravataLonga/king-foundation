@@ -239,7 +239,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_migration ()
+    public function can_get_migration()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -276,7 +276,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_current ()
+    public function can_get_command_current()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -313,7 +313,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_dump_schema ()
+    public function can_get_command_dump_schema()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -350,7 +350,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_execute ()
+    public function can_get_command_execute()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -387,7 +387,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_generate ()
+    public function can_get_command_generate()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -424,7 +424,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_latest ()
+    public function can_get_command_latest()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -461,7 +461,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_migrate ()
+    public function can_get_command_migrate()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -498,7 +498,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_rollup ()
+    public function can_get_command_rollup()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -535,7 +535,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_status ()
+    public function can_get_command_status()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -572,7 +572,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_version ()
+    public function can_get_command_version()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -609,7 +609,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_update ()
+    public function can_get_command_update()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -646,7 +646,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_sync_metadata ()
+    public function can_get_command_sync_metadata()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
@@ -683,7 +683,7 @@ class DatabaseServiceProviderTest extends TestCase
     /**
      * @test
      */
-    public function can_get_command_list ()
+    public function can_get_command_list()
     {
         new Kernel(null, [
             new class() implements ServiceProvider {
