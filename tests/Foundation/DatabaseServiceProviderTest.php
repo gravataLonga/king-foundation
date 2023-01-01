@@ -17,6 +17,7 @@ use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
 use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
+
 use function Gravatalonga\Framework\container;
 use function Gravatalonga\Framework\instance;
 use Gravatalonga\Framework\ServiceProvider;
@@ -233,5 +234,486 @@ class DatabaseServiceProviderTest extends TestCase
         $this->assertContains(UpToDateCommand::class, $consoles);
         $this->assertContains(SyncMetadataCommand::class, $consoles);
         $this->assertContains(ListCommand::class, $consoles);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_migration ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $factory = instance(Migration::class);
+
+        $this->assertNotEmpty($factory);
+        $this->assertInstanceOf(Migration::class, $factory);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_current ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(CurrentCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(CurrentCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_dump_schema ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(DumpSchemaCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(DumpSchemaCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_execute ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(ExecuteCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(ExecuteCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_generate ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(GenerateCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(GenerateCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_latest ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(LatestCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(LatestCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_migrate ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(MigrateCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(MigrateCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_rollup ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(RollupCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(RollupCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_status ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(StatusCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(StatusCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_version ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(VersionCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(VersionCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_update ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(UpToDateCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(UpToDateCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_sync_metadata ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(SyncMetadataCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(SyncMetadataCommand::class, $command);
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_command_list ()
+    {
+        new Kernel(null, [
+            new class() implements ServiceProvider {
+                public function factories(): array
+                {
+                    return [
+                        'config.console' => [],
+                    ];
+                }
+
+                public function extensions(): array
+                {
+                    return [];
+                }
+            },
+            new ConsoleServiceProvider(),
+            new DatabaseServiceProvider(),
+        ]);
+        container()->set('config.databases', [
+            'master' => [
+                'charset' => 'UTF8',
+                'memory' => true,
+                'driver' => 'pdo_sqlite',
+            ],
+        ]);
+
+
+        $command = instance(ListCommand::class);
+
+        $this->assertNotEmpty($command);
+        $this->assertInstanceOf(ListCommand::class, $command);
     }
 }

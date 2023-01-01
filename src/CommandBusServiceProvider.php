@@ -13,6 +13,11 @@ use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use League\Tactician\Plugins\LockingMiddleware;
 use Psr\Container\ContainerInterface;
 
+/**
+ * CommandBusServiceProvider is a service provider that provides a CommandBus service for
+ * a framework. It uses the League Tactician library to create and configure
+ * the CommandBus, along with several middleware objects.
+ */
 class CommandBusServiceProvider implements ServiceProvider
 {
     public function factories(): array
@@ -21,6 +26,11 @@ class CommandBusServiceProvider implements ServiceProvider
             ContainerLocator::class => function (ContainerInterface $container) {
                 return new ContainerLocator($container, $container->has('config.commands') ? $container->get('config.commands') : []);
             },
+
+            /**
+             * Each middleware are register into container by following
+             * manner: bus.middleware.<name>
+             */
             'bus.middleware.lock' => function (ContainerInterface $container) {
                 return new LockingMiddleware();
             },
@@ -31,6 +41,12 @@ class CommandBusServiceProvider implements ServiceProvider
                     new HandleInflector()
                 );
             },
+
+            /**
+             * Returns an array of middleware service names
+             * Available middleware: lock, command.
+             * Required: command middleware is required.
+             */
             'bus.middleware' => function (ContainerInterface $container) {
                 return [
                     'lock',

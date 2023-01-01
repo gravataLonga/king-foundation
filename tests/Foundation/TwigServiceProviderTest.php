@@ -209,4 +209,27 @@ class TwigServiceProviderTest extends TestCase
         $this->assertNotEmpty($output);
         $this->assertEquals('uryyb', $output);
     }
+
+    /**
+     * @test
+     */
+    public function get_empty_array_on_each_plugin_section ()
+    {
+        $container = new Container([
+            'path.resource' => new Path('./tests/stub')
+        ]);
+        $provider = new TwigServiceProvider();
+        $entries = $provider->factories();
+
+        $this->assertIsArray($entries['twig.filter']($container));
+        $this->assertEmpty($entries['twig.filter']($container));
+        $this->assertIsArray($entries['twig.global']($container));
+        $this->assertEmpty($entries['twig.global']($container));
+        $this->assertIsArray($entries['twig.function']($container));
+        $this->assertEmpty($entries['twig.function']($container));
+        $this->assertIsArray($entries['twig.function']($container));
+        $this->assertEmpty($entries['twig.function']($container));
+        $this->assertIsArray($entries['twig.extension']($container));
+        $this->assertEmpty($entries['twig.extension']($container));
+    }
 }
