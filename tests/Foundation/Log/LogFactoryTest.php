@@ -18,7 +18,7 @@ final class LogFactoryTest extends TestCase
     /**
      * @test
      */
-    public function create_factory ()
+    public function create_factory()
     {
         /** @var \Monolog\Logger $monologo */
         $monologo = LogFactory::create('application')
@@ -38,7 +38,7 @@ final class LogFactoryTest extends TestCase
     /**
      * @test
      */
-    public function can_create_handler_only ()
+    public function can_create_handler_only()
     {
         $handlers = LogFactory::create('')
             ->handlerGroup([])
@@ -51,7 +51,7 @@ final class LogFactoryTest extends TestCase
     /**
      * @test
      */
-    public function can_create_processor_only ()
+    public function can_create_processor_only()
     {
         $processes = LogFactory::create('')
             ->processUid()
@@ -64,7 +64,7 @@ final class LogFactoryTest extends TestCase
     /**
      * @test
      */
-    public function can_create_formatter ()
+    public function can_create_formatter()
     {
         $formatters = LogFactory::create('application')
             ->formatterJson()
@@ -79,10 +79,10 @@ final class LogFactoryTest extends TestCase
     /**
      * @test
      */
-    public function can_attach_formatter_to_handler ()
+    public function can_attach_formatter_to_handler()
     {
         $handlers = LogFactory::create('application')
-            ->handlerStream('file.log', formatter: fn() => $this->formatterJson())
+            ->handlerStream('file.log', formatter: fn () => $this->formatterJson())
             ->handlers();
 
         $this->assertInstanceOf(JsonFormatter::class, $handlers[0]->getFormatter());

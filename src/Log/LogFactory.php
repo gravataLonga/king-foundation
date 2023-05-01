@@ -37,7 +37,7 @@ final class LogFactory
 
     public function build(): LoggerInterface
     {
-        $logger =  new Logger($this->name);
+        $logger = new Logger($this->name);
 
         foreach ($this->processes() as $process) {
             $logger->pushProcessor($process);
@@ -105,8 +105,10 @@ final class LogFactory
                     $handler->setFormatter($format);
                 }
             }
+
             return $handler;
         })->bindTo($this);
+
         return $this;
     }
 
@@ -120,6 +122,7 @@ final class LogFactory
         $r = new ReflectionClass($namespace);
         $process = $r->newInstanceArgs($arguments);
         $this->process[] = $process;
+
         return $this;
     }
 
@@ -133,6 +136,7 @@ final class LogFactory
         $r = new ReflectionClass($namespace);
         $formatter = $r->newInstanceArgs($arguments);
         $this->formatter[] = $formatter;
+
         return $this;
     }
 
@@ -152,5 +156,4 @@ final class LogFactory
 
         return '';
     }
-
 }
