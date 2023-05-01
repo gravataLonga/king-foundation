@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -13,7 +11,7 @@ use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-class LogServiceProvider implements ServiceProvider
+final class LogServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {
@@ -44,12 +42,11 @@ class LogServiceProvider implements ServiceProvider
             },
             LoggerInterface::class => function (ContainerInterface $container) {
                 $app = $container->has('config.app') ? $container->get('config.app') : [];
-                $handlers = $container->has('logger.handler') ? $container->get('logger.handler') : [];
 
                 $driver = $container->get('logger.manager');
                 $log = $driver->driver($logConfiguration['driver'] ?? 'default');
 
-                $logger = new Logger($app['name'] ?? 'APP', $handlers);
+                $logger = new Logger($app['name'] ?? 'APP');
 
                 if (empty($log['handler'])) {
                     return $logger;

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -12,7 +10,7 @@ use Slim\Interfaces\CallableResolverInterface;
 use Slim\Interfaces\RouteCollectorInterface;
 use Slim\Routing\RouteCollector;
 
-class SlimServiceProvider implements ServiceProvider
+final class SlimServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {

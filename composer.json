@@ -34,7 +34,8 @@
         "friendsofphp/php-cs-fixer": "^3.4",
         "infection/infection": "^0.25.6",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.5.27"
+        "phpunit/phpunit": "^9.5.27",
+        "rector/rector": "^0.15.25"
     },
     "autoload": {
         "psr-4": {
@@ -49,7 +50,8 @@
     "scripts": {
         "phpstan": "phpstan analyze -l max src",
         "fix-style": "php-cs-fixer src tests",
-        "test": "XDEBUG_MODE=coverage phpunit"
+        "test": "XDEBUG_MODE=coverage phpunit",
+        "rector": "rector process"
     },
     "extra": {
         "branch-alias": {

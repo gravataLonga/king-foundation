@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -8,7 +8,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 
-class ConsoleServiceProvider implements ServiceProvider
+final class ConsoleServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {

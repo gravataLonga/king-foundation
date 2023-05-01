@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -8,7 +6,7 @@ use Dotenv\Dotenv;
 use Gravatalonga\Framework\ServiceProvider;
 use Psr\Container\ContainerInterface;
 
-class DotEnvServiceProvider implements ServiceProvider
+final class DotEnvServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {

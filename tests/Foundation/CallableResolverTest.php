@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Tests;
+namespace Tests\Foundation;
 
 use Gravatalonga\Container\Container;
 use Gravatalonga\KingFoundation\CallableResolver;

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -27,7 +25,7 @@ use Gravatalonga\Framework\ServiceProvider;
 use Gravatalonga\KingFoundation\Database\Migration;
 use Psr\Container\ContainerInterface;
 
-class DatabaseServiceProvider implements ServiceProvider
+final class DatabaseServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {

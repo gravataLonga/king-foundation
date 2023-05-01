@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -18,7 +16,7 @@ use Psr\Container\ContainerInterface;
  * a framework. It uses the League Tactician library to create and configure
  * the CommandBus, along with several middleware objects.
  */
-class CommandBusServiceProvider implements ServiceProvider
+final class CommandBusServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {

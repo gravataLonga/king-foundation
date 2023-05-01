@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Gravatalonga\KingFoundation;
 
@@ -10,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class TwigServiceProvider implements ServiceProvider
+final class TwigServiceProvider implements ServiceProvider
 {
     public function factories(): array
     {
